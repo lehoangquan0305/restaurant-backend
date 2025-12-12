@@ -22,7 +22,12 @@ public class DataSourceConfig {
         }
         try {
             URI uri = new URI(databaseUrl);
-            String jdbcUrl = "jdbc:postgresql://" + uri.getHost() + ":" + uri.getPort() + uri.getPath();
+            String host = uri.getHost();
+            int port = uri.getPort();
+            if (port == -1) {
+                port = 5432; // Default PostgreSQL port
+            }
+            String jdbcUrl = "jdbc:postgresql://" + host + ":" + port + uri.getPath();
             if (uri.getUserInfo() != null) {
                 String[] userInfo = uri.getUserInfo().split(":");
                 String username = userInfo[0];
