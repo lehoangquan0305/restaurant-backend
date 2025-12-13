@@ -99,6 +99,14 @@ public class OrderService {
             table = tableRepository.findById(dto.getTableId())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Table not found"));
             System.out.println("Table loaded: " + table);
+            
+            // Update table status to RESERVED when order is created
+            if (table.getStatus() == DiningTable.TableStatus.AVAILABLE) {
+                table.setStatus(DiningTable.TableStatus.RESERVED);
+                table.setStatusChangedAt(java.time.LocalDateTime.now());
+                tableRepository.save(table);
+                System.out.println("Table status updated to RESERVED");
+            }
         }
 
         // Build order
