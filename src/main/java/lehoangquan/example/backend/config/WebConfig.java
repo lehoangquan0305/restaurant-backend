@@ -10,9 +10,13 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://restaurant-client-chi.vercel.app", "https://restaurant-admin-alpha.vercel.app")
+                .allowedOrigins(
+                    "https://restaurant-client-chi.vercel.app",   // frontend client
+                    "https://restaurant-admin-alpha.vercel.app",   // frontend admin
+                    "http://localhost:5173"                         // local dev
+                )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
-                .allowCredentials(true);
+                .allowCredentials(false); // set false để tránh 403
     }
 }
